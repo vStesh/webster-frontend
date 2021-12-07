@@ -1,26 +1,10 @@
-import { styled } from '@mui/system';
-import { Link } from 'react-router-dom';
+import { styled, textAlign } from '@mui/system';
+import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 
 export const Container = styled('div')({
     minHeight: '100vh',
-});
-
-export const TextFieldWrapper = styled(TextField)({
-    width: '350px',
-    marginTop: '50px',
-});
-
-export const ButtonWrapper = styled(Button)({
-    width: '280px',
-    marginTop: '50px',
-    height: '50px',
-});
-
-export const  LinkWrapper = styled(Link)({
-    textDecoration: 'none',
-    color: 'white',
 });
 
 export const Section = styled('div')({
@@ -49,11 +33,17 @@ export const MainContainer = styled('div')(({ theme }) => ({
     },
 }));
 
-export const LinkSubTitle1 = styled(Link)({
-    textDecoration: 'none',
-    color: 'black',
-    opacity: 0.5,
-    '&:hover': {
-        opacity: 1,
-    }
+export const TypographyWrapper = styled(Typography)({
+    textAlign: 'center',
+});
+
+export const TextFieldWrapper = styled(TextField)({
+    width: '350px',
+    marginTop: '50px',
+});
+
+export const ButtonWrapper = styled(Button)({
+    width: '280px',
+    marginTop: '50px',
+    height: '50px',
 });

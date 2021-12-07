@@ -12,6 +12,7 @@ import NotFound from '../modules/NotFound';
 import ListItems from '../modules/ListItems';
 import SignUp from '../modules/SignUp';
 import Login from '../modules/Login';
+import ForgetPassword from '../modules/ForgetPassword';
 
 export interface IRouteProps extends RouteProps {
     isAuthenticated?: boolean;
@@ -28,6 +29,7 @@ const Routesss: React.FC<IRouteProps> = (props) => {
           <Route path="/list-items" element={<ListItems />}></Route>
           <Route path="/sign-up" element={<SignUp />}></Route>
           <Route path="/login" element={<Login />}></Route>
+          <Route path="/forget-password" element={<ForgetPassword />}></Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
