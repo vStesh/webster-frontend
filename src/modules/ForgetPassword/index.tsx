@@ -1,6 +1,5 @@
 import React from 'react';
 import Header from "../../components/Header";
-import { Link } from 'react-router-dom';
 
 import { 
     Container, 
@@ -13,27 +12,17 @@ import {
 
 const ForgetPassword: React.FC = () => {
     const [disableBtn, setDisableBtn] = React.useState(false);
-    const [errorEmail, setErrorEmail] = React.useState<{ email: string }>();
-    const [errorPassword, setErrorPassword] =
-      React.useState<{ password: string }>();
-    const [email, setEmail] = React.useState("");
-    const [password, setPassword] = React.useState("");
-  
+    const [errorEmail, setErrorEmail] = React.useState(false);
+    const [email, setEmail] = React.useState('');
+    
     const verifyData = (e: React.SyntheticEvent) => {
       e.preventDefault();
       if (email) {
         setDisableBtn(false);
-        setErrorEmail({ email: "" });
+        setErrorEmail(false)
       } else {
         setDisableBtn(true);
-        setErrorEmail({ email: "pls write valid email" });
-      }
-      if (password) {
-        setDisableBtn(false);
-        setErrorPassword({ password: "" });
-      } else {
-        setDisableBtn(true);
-        setErrorPassword({ password: "pls write valid password" });
+        setErrorEmail(true);
       }
     };
     const emailChange = (
@@ -43,6 +32,18 @@ const ForgetPassword: React.FC = () => {
         target: { value },
       } = e;
       setEmail(value);
+      setErrorEmail(false);
+      const regExp = new RegExp(
+        "^[a-zA-Z0-9.!#$%&'*+=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)+$"
+      ).test(value);
+
+      if (!regExp || value.length < 4 || value.length > 40) {
+        setErrorEmail(true);
+        setDisableBtn(true);
+      } else {
+        setDisableBtn(false);
+        setErrorEmail(false);
+      }
     };
 
     return(
@@ -57,8 +58,8 @@ const ForgetPassword: React.FC = () => {
               label="Email"
               variant="outlined"
               value={email}
-              error={!!errorEmail?.email}
-              helperText={errorEmail?.email}
+              error={errorEmail}
+              helperText={errorEmail && 'Please enter a valid email address.'}
               onChange={emailChange}
             /> 
             <ButtonWrapper

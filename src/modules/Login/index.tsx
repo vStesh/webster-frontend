@@ -8,6 +8,7 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Header from "../../components/Header";
+import { loginRequest } from '../../api';
 
 import {
   Container,
@@ -21,12 +22,11 @@ import {
 const Login: React.FC = () => {
   const [disableBtn, setDisableBtn] = React.useState(false);
   const [errorEmail, setErrorEmail] = React.useState<{ email: string }>();
-  // const [errorPassword, setErrorPassword] =
-  //   React.useState<{ password: string }>();
   const [errorPassword, setErrorPassword] = React.useState(false);
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [showPassword, setShowPassword] = React.useState(false);
+  const [showErrorLabel, setShowErrorLabel] = React.useState(false);
 
   const verifyData = (e: React.SyntheticEvent) => {
     e.preventDefault();
@@ -39,13 +39,20 @@ const Login: React.FC = () => {
     }
     if (password) {
       setDisableBtn(false);
-      // setErrorPassword({ password: "" });
       setErrorPassword(false);
+      setShowErrorLabel(false);
     } else {
+      setShowErrorLabel(true);
       setDisableBtn(true);
-      // setErrorPassword({ password: "please write valid password." });
       setErrorPassword(true);
     }
+
+    const data = {
+      email,
+      password,
+    };
+
+    loginRequest.loginUser(data);
   };
 
   const emailChange = (
@@ -73,16 +80,16 @@ const Login: React.FC = () => {
       target: { value },
     } = e;
     setPassword(value);
+    setShowErrorLabel(false);
     const reg = new RegExp(
       /(?=^[\w\d!"#$%&'()*+,\-./:;<=>?@[\\\]^`{|}~]{8,64}$)(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!"#$%&'()*+,\-./:;<=>?@[\\\]^`{|}~])/,
     ).test(value);
     if(!reg){
-      // setErrorPassword({password: 'Please enter a valid email address.'});
+      setShowErrorLabel(true);
       setErrorPassword(true);
       setDisableBtn(true);
     }else{
       setDisableBtn(false);
-      // setErrorPassword({password: ''});
       setErrorPassword(false);
     }
   };
@@ -94,6 +101,8 @@ const Login: React.FC = () => {
   const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
   };
+
+
   return (
     <>
       <Container>
@@ -111,7 +120,7 @@ const Login: React.FC = () => {
               onChange={emailChange}
             />
             <FormControl sx={{ m: 1, width: '43.5ch' }} variant="outlined">
-              <InputLabel htmlFor="outlined-adornment-password" style={{color: errorPassword ? '#f44336' : 'primary'}}>Password</InputLabel>
+              <InputLabel htmlFor="outlined-adornment-password" error={showErrorLabel}>Password</InputLabel>
               <OutlinedInput
                     label="Password"
                     id="outlined-adornment-password"
