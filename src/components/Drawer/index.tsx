@@ -31,28 +31,38 @@ const Drawer: React.FC = () => {
           <Wrapper>
               <Box textAlign="center" p={2}
                 >
-                Components
+                Меню
                 </Box>
                 <Divider />
                 <List>
-                    <LinkWrapper to="/about">
+                    <LinkWrapper to="/About">
                         <ListItem button>
-                            <ListItemText primary={'About'} />
-                        </ListItem>
-                    </LinkWrapper>
-                    <LinkWrapper to="/list-items">
-                        <ListItem button>
-                            <ListItemText primary={'Cards'} />
+                            <ListItemText primary={'Хранилища'} />
                         </ListItem>
                     </LinkWrapper>
                     <LinkWrapper to="/About">
                         <ListItem button>
-                            <ListItemText primary={'about'} />
+                            <ListItemText primary={'Заказы'} />
                         </ListItem>
                     </LinkWrapper>
                     <LinkWrapper to="/About">
                         <ListItem button>
-                            <ListItemText primary={'about'} />
+                            <ListItemText primary={'Шаблоны'} />
+                        </ListItem>
+                    </LinkWrapper>
+                    <LinkWrapper to="/About">
+                        <ListItem button>
+                            <ListItemText primary={'История'} />
+                        </ListItem>
+                    </LinkWrapper>
+                    <LinkWrapper to="/About">
+                        <ListItem button>
+                            <ListItemText primary={'Карта'} />
+                        </ListItem>
+                    </LinkWrapper>
+                    <LinkWrapper to="/About">
+                        <ListItem button>
+                            <ListItemText primary={'Настройки'} />
                         </ListItem>
                     </LinkWrapper>
                 </List>

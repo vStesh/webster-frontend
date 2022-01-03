@@ -11,9 +11,10 @@ export interface PageProps {
   drawer?: boolean;
   loginButton?: boolean;
   signUpButton?: boolean;
+  logOut?: boolean;
 }
 
-const Header: React.FC<PageProps> = ({ loginButton, signUpButton, drawer }) => {
+const Header: React.FC<PageProps> = ({ loginButton, signUpButton, drawer, logOut }) => {
   const loginButtonElement = loginButton && (
     <LinkWrapper to="/login">
       <Button color="inherit" variant="outlined">
@@ -28,16 +29,24 @@ const Header: React.FC<PageProps> = ({ loginButton, signUpButton, drawer }) => {
       </Button>
     </LinkWrapper>
   );
+  const logOutButtonElement = logOut && (
+    <LinkWrapper to="/">
+      <Button color="inherit" variant="contained">
+        Log Out
+      </Button>
+    </LinkWrapper>
+  );
   return (
     <Box>
       <AppBar position="static">
         <Toolbar>
           {drawer && <Drawer />}
           <Typography variant="h6" sx={{ flexGrow: 1 }}>
-            <LinkWrapper to="/">Uevent</LinkWrapper>
+            <LinkWrapper to="/">Webster</LinkWrapper>
           </Typography>
           <Box mr={3}>{loginButtonElement}</Box>
           {signUpButtonElement}
+          {logOutButtonElement}
         </Toolbar>
       </AppBar>
     </Box>

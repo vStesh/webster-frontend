@@ -1,25 +1,28 @@
 import axios from 'axios';
-import { dataTypeSignUp, dataTypeLogin } from '../types';
+import { DataTypeSignUp, DataTypeLogin } from '../types';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 
-export const API_URL = 'http://api.printapp.store';
+export const API_URL = 'http://api.printapp.store/';
 
 const instance = axios.create({
-    withCredentials: true,
+    withCredentials: false,
     baseURL: API_URL,
 });
 
-export const signUpRequest = {
-    signUpUser(data: dataTypeSignUp){
-        return instance.post('/api/auth/register', data)
-            .then(res => console.log(res))
-            .catch(err => console.log(err));
+export const signUpUser = createAsyncThunk(
+    'signup/signUpUser',
+    async (data: DataTypeSignUp) => {
+       return await instance.post('api/auth/register', data)
+            .then(res => res.data)
+            .catch(err => err);
     }
-}
+);
 
-export const loginRequest = {
-    loginUser(data: dataTypeLogin){
+export const loginRequest = createAsyncThunk(
+    'login/loginRequest',
+    async (data: DataTypeLogin) => {
         return instance.post('api/auth/login', data)
-            .then(res => console.log(res))
-            .catch(err => console.log(err));
+            .then(res => res.data)
+            .catch(err => err);
     }
-}
+);

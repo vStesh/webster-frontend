@@ -9,6 +9,9 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Header from "../../components/Header";
 import { loginRequest } from '../../api';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../store/rootReducer';
+import { useNavigate } from 'react-router-dom';
 
 import {
   Container,
@@ -27,6 +30,19 @@ const Login: React.FC = () => {
   const [password, setPassword] = React.useState("");
   const [showPassword, setShowPassword] = React.useState(false);
   const [showErrorLabel, setShowErrorLabel] = React.useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const goToMainPage = () => navigate('/main-page');
+
+  const loginData = useSelector((state: RootState) => state.login);
+
+  React.useEffect(() => {
+    if (loginData.response.status === 0) {
+      console.log('you are success login');
+      goToMainPage();
+    }
+  }, [loginData]);
+  
 
   const verifyData = (e: React.SyntheticEvent) => {
     e.preventDefault();
@@ -46,13 +62,7 @@ const Login: React.FC = () => {
       setDisableBtn(true);
       setErrorPassword(true);
     }
-
-    const data = {
-      email,
-      password,
-    };
-
-    loginRequest.loginUser(data);
+    dispatch(loginRequest({email, password}));
   };
 
   const emailChange = (

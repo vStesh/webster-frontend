@@ -9,7 +9,7 @@ import { BodyWrapper } from "./styles";
 const Welcome: React.FC = () => {
   return (
     <BodyWrapper>
-      <Header loginButton signUpButton drawer />
+      <Header loginButton signUpButton />
       <h1 style={{ textAlign: "center" }}>Welcome page</h1>
       <Slider slides={SliderData} />
       <Footer />
