@@ -52,10 +52,10 @@ const SignUp: React.FC = () => {
   }
 
   React.useEffect(() => {
-    if (userData.status === 0) {
+    if (userData?.status === 0) {
       console.log('your are register!');
       goToMainPage();
-    }else if(userData.status === 20) {
+    }else if(userData?.status === 20) {
       console.log(userData?.error);
     }
   }, [userData])

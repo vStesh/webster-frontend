@@ -13,7 +13,8 @@ export const loginSlice = createSlice({
     initialState,
     reducers: {
       logOutAction: (state) => {
-        state.response = {}; 
+        state.response = {};
+        localStorage.removeItem('token');
       }
     },
     extraReducers: (builder) => {

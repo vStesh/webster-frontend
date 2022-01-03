@@ -37,7 +37,7 @@ const Login: React.FC = () => {
   const loginData = useSelector((state: RootState) => state.login);
 
   React.useEffect(() => {
-    if (loginData.response.status === 0) {
+    if (loginData?.response?.status === 0) {
       console.log('you are success login');
       goToMainPage();
     }

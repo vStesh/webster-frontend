@@ -3,12 +3,16 @@ import { DataTypeSignUp, DataTypeLogin } from '../types';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 export const API_URL = 'http://api.printapp.store/';
-// export const API_URL = 'http://localhost:5000/';
 
 const instance = axios.create({
     withCredentials: false,
     baseURL: API_URL,
 });
+
+// instance.interceptors.request.use(config) => {
+//     config.headers.Authorization = `Bearer ${localStorage.getItem('token')}`;
+//     return config
+// }
 
 export const signUpUser = createAsyncThunk(
     'signup/signUpUser',
@@ -23,7 +27,10 @@ export const loginRequest = createAsyncThunk(
     'login/loginRequest',
     async (data: DataTypeLogin) => {
         return instance.post('api/auth/login', data)
-            .then(res => res.data)
+            .then(res => {
+                localStorage.setItem('token', res.data?.data?.accessToken)
+                return  res.data
+            })
             .catch(err => err);
     }
 );
@@ -34,3 +41,4 @@ export const logOutRequest = createAsyncThunk(
         return instance.post('api/auth/login')
     }
 );
+

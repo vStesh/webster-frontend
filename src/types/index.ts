@@ -35,5 +35,5 @@ export interface ResponseDataType {
 
 export interface SignUpStateType {
     status: string;
-    response: ResponseDataType;
+    response?: ResponseDataType;
 }
