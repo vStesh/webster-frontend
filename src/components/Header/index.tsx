@@ -6,6 +6,8 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Drawer from '../Drawer';
 import { LinkWrapper } from "./styles";
+import { logOutAction } from '../../features/loginSlice';
+import { useDispatch } from "react-redux";
 
 export interface PageProps {
   drawer?: boolean;
@@ -15,6 +17,8 @@ export interface PageProps {
 }
 
 const Header: React.FC<PageProps> = ({ loginButton, signUpButton, drawer, logOut }) => {
+  const dispatch = useDispatch();
+
   const loginButtonElement = loginButton && (
     <LinkWrapper to="/login">
       <Button color="inherit" variant="outlined">
@@ -31,7 +35,7 @@ const Header: React.FC<PageProps> = ({ loginButton, signUpButton, drawer, logOut
   );
   const logOutButtonElement = logOut && (
     <LinkWrapper to="/">
-      <Button color="inherit" variant="contained">
+      <Button color="inherit" variant="contained" onClick={() => dispatch(logOutAction())}>
         Log Out
       </Button>
     </LinkWrapper>

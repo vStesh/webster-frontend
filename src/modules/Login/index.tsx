@@ -91,10 +91,10 @@ const Login: React.FC = () => {
     } = e;
     setPassword(value);
     setShowErrorLabel(false);
-    const reg = new RegExp(
-      /(?=^[\w\d!"#$%&'()*+,\-./:;<=>?@[\\\]^`{|}~]{8,64}$)(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!"#$%&'()*+,\-./:;<=>?@[\\\]^`{|}~])/,
-    ).test(value);
-    if(!reg){
+    // const reg = new RegExp(
+    //   /(?=^[\w\d!"#$%&'()*+,\-./:;<=>?@[\\\]^`{|}~]{8,64}$)(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!"#$%&'()*+,\-./:;<=>?@[\\\]^`{|}~])/,
+    // ).test(value);
+    if(value.length < 6){
       setShowErrorLabel(true);
       setErrorPassword(true);
       setDisableBtn(true);

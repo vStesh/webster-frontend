@@ -3,6 +3,7 @@ import { DataTypeSignUp, DataTypeLogin } from '../types';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 export const API_URL = 'http://api.printapp.store/';
+// export const API_URL = 'http://localhost:5000/';
 
 const instance = axios.create({
     withCredentials: false,
@@ -24,5 +25,12 @@ export const loginRequest = createAsyncThunk(
         return instance.post('api/auth/login', data)
             .then(res => res.data)
             .catch(err => err);
+    }
+);
+
+export const logOutRequest = createAsyncThunk(
+    'logout/logOutRequest',
+    async () => {
+        return instance.post('api/auth/login')
     }
 );

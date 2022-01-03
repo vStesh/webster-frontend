@@ -11,7 +11,11 @@ const initialState: SignUpStateType = {
 export const loginSlice = createSlice({
     name: 'user',
     initialState,
-    reducers: {},
+    reducers: {
+      logOutAction: (state) => {
+        state.response = {}; 
+      }
+    },
     extraReducers: (builder) => {
       builder.addCase(loginRequest.pending, (state) => {
         state.status = 'pending';
@@ -25,5 +29,7 @@ export const loginSlice = createSlice({
       })
     },
   });
+
+  export const { logOutAction } = loginSlice.actions;
 
   export default loginSlice.reducer; 
