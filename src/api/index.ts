@@ -9,6 +9,11 @@ const instance = axios.create({
     baseURL: API_URL,
 });
 
+instance.interceptors.request.use((config: any) => {
+    config.headers.Authorization = `Bearer ${localStorage.getItem('token')}`;
+    return config;
+})
+
 export const signUpUser = createAsyncThunk(
     'signup/signUpUser',
     async (data: DataTypeSignUp) => {
