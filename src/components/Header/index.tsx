@@ -8,6 +8,7 @@ import Drawer from '../Drawer';
 import { LinkWrapper } from "./styles";
 import { logOutAction } from '../../features/loginSlice';
 import { useDispatch } from "react-redux";
+import { logOutRequest } from "../../api";
 
 export interface PageProps {
   drawer?: boolean;
@@ -33,9 +34,14 @@ const Header: React.FC<PageProps> = ({ loginButton, signUpButton, drawer, logOut
       </Button>
     </LinkWrapper>
   );
+
+  const deleteUser = () => {
+    dispatch(logOutRequest())
+    dispatch(logOutAction())
+  }
   const logOutButtonElement = logOut && (
-    <LinkWrapper to="/">
-      <Button color="inherit" variant="contained" onClick={() => dispatch(logOutAction())}>
+    <LinkWrapper to="/welcome">
+      <Button color="inherit" variant="contained" onClick={deleteUser}>
         Log Out
       </Button>
     </LinkWrapper>

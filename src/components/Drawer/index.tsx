@@ -35,32 +35,32 @@ const Drawer: React.FC = () => {
                 </Box>
                 <Divider />
                 <List>
-                    <LinkWrapper to="/About">
+                    <LinkWrapper to="/repository">
                         <ListItem button>
                             <ListItemText primary={'Хранилища'} />
                         </ListItem>
                     </LinkWrapper>
-                    <LinkWrapper to="/About">
+                    <LinkWrapper to="/orders">
                         <ListItem button>
                             <ListItemText primary={'Заказы'} />
                         </ListItem>
                     </LinkWrapper>
-                    <LinkWrapper to="/About">
+                    <LinkWrapper to="/templates">
                         <ListItem button>
                             <ListItemText primary={'Шаблоны'} />
                         </ListItem>
                     </LinkWrapper>
-                    <LinkWrapper to="/About">
+                    <LinkWrapper to="/history">
                         <ListItem button>
                             <ListItemText primary={'История'} />
                         </ListItem>
                     </LinkWrapper>
-                    <LinkWrapper to="/About">
+                    <LinkWrapper to="/map">
                         <ListItem button>
                             <ListItemText primary={'Карта'} />
                         </ListItem>
                     </LinkWrapper>
-                    <LinkWrapper to="/About">
+                    <LinkWrapper to="/settings">
                         <ListItem button>
                             <ListItemText primary={'Настройки'} />
                         </ListItem>

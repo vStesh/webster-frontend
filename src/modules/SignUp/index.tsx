@@ -39,7 +39,7 @@ const SignUp: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const userData = useSelector((state: RootState) => state.signUp.response);
-  const goToMainPage = () => navigate('/main-page');
+  const goToMainPage = () => navigate('/');
 
   const verifyData = (value: string, setErrors: (item: boolean) => void) => {
     if(value) {

@@ -37,3 +37,8 @@ export interface SignUpStateType {
     status: string;
     response?: ResponseDataType;
 }
+
+export interface PhotoStateType {
+    photoURL?: {};
+    status?: string;
+}

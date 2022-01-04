@@ -9,16 +9,14 @@ const instance = axios.create({
     baseURL: API_URL,
 });
 
-// instance.interceptors.request.use(config) => {
-//     config.headers.Authorization = `Bearer ${localStorage.getItem('token')}`;
-//     return config
-// }
-
 export const signUpUser = createAsyncThunk(
     'signup/signUpUser',
     async (data: DataTypeSignUp) => {
        return await instance.post('api/auth/register', data)
-            .then(res => res.data)
+            .then(res => {
+                localStorage.setItem('token', res.data?.data?.accessToken);
+                return res.data
+            })
             .catch(err => err);
     }
 );
@@ -28,7 +26,7 @@ export const loginRequest = createAsyncThunk(
     async (data: DataTypeLogin) => {
         return instance.post('api/auth/login', data)
             .then(res => {
-                localStorage.setItem('token', res.data?.data?.accessToken)
+                localStorage.setItem('token', res.data?.data?.accessToken);
                 return  res.data
             })
             .catch(err => err);
@@ -38,7 +36,26 @@ export const loginRequest = createAsyncThunk(
 export const logOutRequest = createAsyncThunk(
     'logout/logOutRequest',
     async () => {
-        return instance.post('api/auth/login')
+        return instance.post('api/auth/logout')
     }
 );
+
+export const updatePhoto = createAsyncThunk(
+    'photo/updatePhoto',
+    async (id: string | undefined) => {
+        return instance.put(`api/user/${id}`)
+    }
+)
+
+export const userDataRequest = createAsyncThunk(
+    'user/userDataRequest',
+    async() => {
+        return instance.get('api/auth/user')
+            .then(res => res)
+            .catch(err => {
+                console.log(err)
+                return err
+            });
+    }
+)
 

@@ -9,11 +9,14 @@ import { BodyWrapper } from "./styles";
 
 const Welcome: React.FC = () => {
   const navigate = useNavigate();
-  const goToMainPage = () => navigate('/main-page');
+  const goToWelcomePage = () => navigate('/welcome');
+  const goToMainPage = () => navigate('/')
   useEffect(() => {
     if(localStorage.getItem('token')){
       console.log('пользователь авторизирован');
-      goToMainPage()
+      goToMainPage();
+    }else{
+      goToWelcomePage();
     }
   }, []);
   return (

@@ -32,7 +32,7 @@ const Login: React.FC = () => {
   const [showErrorLabel, setShowErrorLabel] = React.useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const goToMainPage = () => navigate('/main-page');
+  const goToMainPage = () => navigate('/');
 
   const loginData = useSelector((state: RootState) => state.login);
 

@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { SignUpStateType } from '../types';
-import { loginRequest } from '../api';
+import { loginRequest, logOutRequest } from '../api';
 
 
 const initialState: SignUpStateType = {
@@ -15,19 +15,28 @@ export const loginSlice = createSlice({
       logOutAction: (state) => {
         state.response = {};
         localStorage.removeItem('token');
-      }
+      },
     },
     extraReducers: (builder) => {
       builder.addCase(loginRequest.pending, (state) => {
         state.status = 'pending';
       });
+      builder.addCase(logOutRequest.pending, state => {
+        state.status = 'pending logout';
+      });
       builder.addCase(loginRequest.fulfilled, (state, { payload }) => {
-        state.status = 'fulfilled';
+        state.status = 'fulfilled-login';
         state.response = payload;
-      })
+      });
+      builder.addCase(logOutRequest.fulfilled, (state) => {
+        state.status = 'user success log-out';
+      });
       builder.addCase(loginRequest.rejected, (state) => {
-        state.status = 'something went wrong'
-      })
+        state.status = 'something went wrong with login'
+      });
+      builder.addCase(logOutRequest.rejected, (state) => {
+        state.status = 'something went wrong with logout'
+      });
     },
   });
 
