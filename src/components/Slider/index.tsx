@@ -25,12 +25,6 @@ const Slider: React.FC<SliderPropsTypes> = ({ slides }) => {
         setCurrent(current === 0 ? length - 1 : current - 1)
     }
 
-    // React.useEffect(() => {
-    //     setInterval(() => {
-    //         nextSlide();
-    //     }, 1000);
-    // }, []);
-    console.log(current)
 
     if(!Array.isArray(slides) || slides.length <= 0){
         return null;

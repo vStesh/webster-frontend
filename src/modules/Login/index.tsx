@@ -9,8 +9,6 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Header from "../../components/Header";
 import { loginRequest } from '../../api';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../store/rootReducer';
 import { useNavigate } from 'react-router-dom';
 
 import {
@@ -26,23 +24,14 @@ const Login: React.FC = () => {
   const [disableBtn, setDisableBtn] = React.useState(false);
   const [errorEmail, setErrorEmail] = React.useState<{ email: string }>();
   const [errorPassword, setErrorPassword] = React.useState(false);
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
   const [showPassword, setShowPassword] = React.useState(false);
   const [showErrorLabel, setShowErrorLabel] = React.useState(false);
-  const dispatch = useDispatch();
+  const [userAlreadyExists, setUserAlreadyExists] = React.useState('');
   const navigate = useNavigate();
   const goToMainPage = () => navigate('/');
 
-  const loginData = useSelector((state: RootState) => state.login);
-
-  React.useEffect(() => {
-    if (loginData?.response?.status === 0) {
-      console.log('you are success login');
-      goToMainPage();
-    }
-  }, [loginData]);
-  
 
   const verifyData = (e: React.SyntheticEvent) => {
     e.preventDefault();
@@ -62,7 +51,22 @@ const Login: React.FC = () => {
       setDisableBtn(true);
       setErrorPassword(true);
     }
-    dispatch(loginRequest({email, password}));
+    loginRequest({email, password}).then((res) => {
+      if(res.status === 20){
+        setUserAlreadyExists(res.message[0]);
+      }else if(res.status === 3){
+        setUserAlreadyExists(res.message[0]);
+        setEmail('');
+        setPassword('');
+      }else if(res.status === 2){
+        setUserAlreadyExists(res.message[0]);
+        setEmail('');
+        setPassword('');
+      }
+      if(res.status === 0){
+        goToMainPage();
+      }
+    })
   };
 
   const emailChange = (
@@ -71,6 +75,7 @@ const Login: React.FC = () => {
     const {
       target: { value },
     } = e;
+    setUserAlreadyExists('');
     setEmail(value);
     const regExp = new RegExp("^[a-zA-Z0-9.!#$%&'*+=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)+$").test(value);
 
@@ -89,11 +94,9 @@ const Login: React.FC = () => {
     const {
       target: { value },
     } = e;
+    setUserAlreadyExists('');
     setPassword(value);
     setShowErrorLabel(false);
-    // const reg = new RegExp(
-    //   /(?=^[\w\d!"#$%&'()*+,\-./:;<=>?@[\\\]^`{|}~]{8,64}$)(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!"#$%&'()*+,\-./:;<=>?@[\\\]^`{|}~])/,
-    // ).test(value);
     if(value.length < 6){
       setShowErrorLabel(true);
       setErrorPassword(true);
@@ -156,6 +159,7 @@ const Login: React.FC = () => {
             <LinkSubTitle1 to="/forget-password">
                             <Typography variant="subtitle1">don't remember password</Typography>
             </LinkSubTitle1>
+            <div style={{color: 'red'}}>{userAlreadyExists}</div>
             <ButtonWrapper
               type="submit"
               onClick={verifyData}

@@ -6,7 +6,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Drawer from '../Drawer';
 import { LinkWrapper } from "./styles";
-import { logOutAction } from '../../features/loginSlice';
+import { logOutAction } from '../../features/userSlice';
 import { useDispatch } from "react-redux";
 import { logOutRequest } from "../../api";
 
@@ -36,8 +36,8 @@ const Header: React.FC<PageProps> = ({ loginButton, signUpButton, drawer, logOut
   );
 
   const deleteUser = () => {
-    dispatch(logOutRequest())
-    dispatch(logOutAction())
+    logOutRequest();
+    dispatch(logOutAction());
   }
   const logOutButtonElement = logOut && (
     <LinkWrapper to="/welcome">

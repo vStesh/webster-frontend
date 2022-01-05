@@ -1,29 +1,22 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import Typography from '@mui/material/Typography';
-import { RootState } from '../../store/rootReducer';
-import { userDataRequest } from '../../api';
 import Header from "../../components/Header";
-import Slider from "../../components/Slider";
-import {SliderData} from "../../assets/SliderData";
 import Footer from "../../components/Footer";
 import {BodyWrapper} from "../Welcome/styles";
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store/rootReducer';
 
 const Settings: React.FC = () => {
-    const dispatch = useDispatch();
-    useEffect(() => {
-        dispatch(userDataRequest());
-    }, []);
-    const userData = useSelector((state: RootState) => state.login.response?.data?.user.email);
-    console.log(userData);
+    const userData = useSelector((state: RootState) => state.user?.userData);
     return (
         <BodyWrapper>
-            <Header loginButton signUpButton />
+            <Header logOut/>
             <Typography variant="h2">
                 Настройки
             </Typography>
-            <div>Your email: {userData}</div>
+            <div>Your name: {userData ? userData.name : 'please login'}</div>
+            <div>Your email: {userData ? userData.email : 'please login'}</div>
             <Link to="/">home</Link>
             <Footer />
         </BodyWrapper>

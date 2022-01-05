@@ -9,8 +9,6 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { signUpUser } from '../../api';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../store/rootReducer';
 import { useNavigate } from 'react-router-dom';
 
 import {
@@ -31,14 +29,13 @@ const SignUp: React.FC = () => {
   const [showPassword, setShowPassword] = React.useState(false);
   const [showErrorLabel, setShowErrorLabel] = React.useState(false);
   const [errorPassword, setErrorPassword] = React.useState(false);
-  const [confirm, setPasswordConfrim] = React.useState('');
+  const [confirm, setPasswordConfirm] = React.useState('');
   const [showPasswordConfirm, setShowPasswordConfirm] = React.useState(false);
   const [showErrorLabelConfirm, setShowErrorLabelConfirm] = React.useState(false);
   const [errorPasswordConfirm, setErrorPasswordConfirm] = React.useState(false);
+  const [userAlreadyExists, setUserAlreadyExists] = React.useState('');
   document.title = "Sign Up";
-  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const userData = useSelector((state: RootState) => state.signUp.response);
   const goToMainPage = () => navigate('/');
 
   const verifyData = (value: string, setErrors: (item: boolean) => void) => {
@@ -51,28 +48,34 @@ const SignUp: React.FC = () => {
     }
   }
 
-  React.useEffect(() => {
-    if (userData?.status === 0) {
-      console.log('your are register!');
-      goToMainPage();
-    }else if(userData?.status === 20) {
-      console.log(userData?.error);
-    }
-  }, [userData])
-
   const verifyAllData = () => {
     verifyData(email, setErrors);
     verifyData(password, setErrorPassword);
     verifyData(confirm, setErrorPasswordConfirm);
     verifyData(name, setErrorName);
 
-    dispatch(
       signUpUser({
       email,
       password,
       confirm,
       name,
-    }));
+      }).then(res => {
+        if(res.status === 20){
+          setUserAlreadyExists(res.message[0]);
+          setEmail('');
+          setName('');
+          setPassword('');
+          setPasswordConfirm('');
+        }else if(res.status === 21){
+          setUserAlreadyExists(res.message[0]);
+          setPassword('');
+          setPasswordConfirm('');
+        }
+        if(res.status === 0){
+          goToMainPage();
+        
+        }
+      }).catch(error => error);
   }
 
   const nameChange = (
@@ -81,6 +84,7 @@ const SignUp: React.FC = () => {
     const {
       target: { value },
     } = e;
+    setUserAlreadyExists('');
     setName(value);
     setErrorName(false);
     if(name.length < 2){
@@ -94,6 +98,7 @@ const SignUp: React.FC = () => {
     const {
       target: { value },
     } = e;
+    setUserAlreadyExists('');
     setEmail(value);
     setErrors(false);
     const regExp = new RegExp(
@@ -115,11 +120,9 @@ const SignUp: React.FC = () => {
     const {
       target: { value },
     } = e;
+    setUserAlreadyExists('');
     setPassword(value);
     setShowErrorLabel(false);
-    // const reg = new RegExp(
-    //   /(?=^[\w\d!"#$%&'()*+,\-./:;<=>?@[\\\]^`{|}~]{8,64}$)(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!"#$%&'()*+,\-./:;<=>?@[\\\]^`{|}~])/,
-    // ).test(value);
     if(value.length < 6){
       setShowErrorLabel(true);
       setErrorPassword(true);
@@ -136,11 +139,9 @@ const SignUp: React.FC = () => {
     const {
       target: { value },
     } = e;
-    setPasswordConfrim(value);
+    setUserAlreadyExists('');
+    setPasswordConfirm(value);
     setShowErrorLabelConfirm(false);
-    // const reg = new RegExp(
-    //   /(?=^[\w\d!"#$%&'()*+,\-./:;<=>?@[\\\]^`{|}~]{8,64}$)(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!"#$%&'()*+,\-./:;<=>?@[\\\]^`{|}~])/,
-    // ).test(value);
     if(value.length < 6){
       setShowErrorLabelConfirm(true);
       setErrorPasswordConfirm(true);
@@ -236,6 +237,7 @@ const SignUp: React.FC = () => {
                     />
                     {errorPasswordConfirm ? <div style={{color: '#f44336', marginLeft: 15, fontSize: 13}}>Looks like your password doesn’t match requirements.</div> : null}
               </FormControl>
+              <div style={{color: 'red'}}>{userAlreadyExists}</div>
               <ButtonWrapper 
                 variant="contained" 
                 disabled={disableBtn}
