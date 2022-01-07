@@ -4,23 +4,25 @@ import Footer from "../../components/Footer";
 import { useNavigate } from 'react-router-dom';
 import { BodyWrapper } from "./styles";
 import { userDataRequest } from '../../api';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../store/rootReducer';
 document.title = "Main Page";
 
 const MainPage: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const goToWelcomePage = () => navigate('/welcome');
-  const goToMainPage = () => navigate('/');
+  const userData = useSelector((state: RootState) => state.user.isUser);
 
   useEffect(() => {
-    dispatch(userDataRequest());
-    if(localStorage.getItem('token')){
+    const goToWelcomePage = () => navigate('/welcome');
+    const goToMainPage = () => navigate('/');
+    if (localStorage.getItem('token') || userData) {
+      dispatch(userDataRequest());
       goToMainPage();
-    }else{
+    } else {
       goToWelcomePage();
     }
-  }, []);
+  }, [userData, navigate, dispatch]);
   return (
     <BodyWrapper>
       <Header drawer logOut/>

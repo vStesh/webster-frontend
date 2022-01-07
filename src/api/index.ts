@@ -14,6 +14,21 @@ instance.interceptors.request.use((config: any) => {
   return config;
 });
 
+instance.interceptors.response.use((config: any) => {
+    return config;
+}, (async (error) => {
+    // const originalRequest = error.config;
+    if(error.response.status === 401){
+        try{
+            const response = await instance.get('/api/auth/refresh');
+            localStorage.setItem("token", response.data?.data?.accessToken);
+        }catch(err){
+            console.log('пользователь не авторизован', err);
+        };
+    }
+    throw error;
+}));
+
 export const signUpUser = async (data: DataTypeSignUp) => {
   return await instance
     .post("api/auth/register", data)
@@ -50,10 +65,17 @@ export const userDataRequest = createAsyncThunk(
   async () => {
     return instance
       .get("api/auth/user")
-      .then((res) => {
-        //   console.log(res.data.data);
-        return  res.data.data
-        })
+      .then((res) => res.data.data)
       .catch((err) => err);
   }
 );
+
+export const usersRequest = createAsyncThunk(
+  "users/usersRequest",
+  async () => {
+    return instance
+        .get("/api/auth/users")
+        .then((res) => res.data)
+        .catch(err => err);
+  }
+)
