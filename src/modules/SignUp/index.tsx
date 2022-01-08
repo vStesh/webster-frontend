@@ -10,6 +10,7 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { signUpUser } from '../../api';
 import { useNavigate } from 'react-router-dom';
+import Footer from "../../components/Footer";
 
 import {
   Container,
@@ -247,6 +248,7 @@ const SignUp: React.FC = () => {
               </ButtonWrapper>
           </MainContainer>
         </Section>
+        <Footer />
       </Container>
     </>
   );

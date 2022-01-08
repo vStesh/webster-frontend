@@ -22,13 +22,11 @@ const MainPage: React.FC = () => {
     } else {
       goToWelcomePage();
     }
-  }, [userData, navigate, dispatch]);
+  }, [navigate, dispatch]);
   return (
     <BodyWrapper>
       <Header drawer logOut/>
       <h1 style={{ textAlign: "center" }}>you are logged</h1>
-      <input type="file"/>
-      {/* {photo} */}
       <Footer />
     </BodyWrapper>
   );

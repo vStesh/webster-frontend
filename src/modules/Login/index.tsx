@@ -10,6 +10,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Header from "../../components/Header";
 import { loginRequest } from '../../api';
 import { useNavigate } from 'react-router-dom';
+import Footer from "../../components/Footer";
 
 import {
   Container,
@@ -170,6 +171,7 @@ const Login: React.FC = () => {
             </ButtonWrapper>
           </MainContainer>
         </Section>
+        <Footer />
       </Container>
     </>
   );

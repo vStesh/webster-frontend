@@ -20,6 +20,7 @@ import Repository from '../modules/Repository';
 import Orders from '../modules/Orders';
 import Map from '../modules/Map';
 import History from '../modules/History';
+import UsersImages from '../modules/UsersImages';
 
 export interface IRouteProps extends RouteProps {
     isAuthenticated?: boolean;
@@ -44,6 +45,7 @@ const Routesss: React.FC<IRouteProps> = (props) => {
           <Route path="/orders" element={<Orders />}></Route>
           <Route path="/map" element={<Map />}></Route>
           <Route path="/history" element={<History />}></Route>
+          <Route path="/users-images" element={<UsersImages />}></Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

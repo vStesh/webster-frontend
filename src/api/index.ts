@@ -5,7 +5,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 export const API_URL = "http://api.printapp.store/";
 
 const instance = axios.create({
-  withCredentials: false,
+  withCredentials: true,
   baseURL: API_URL,
 });
 
@@ -15,15 +15,20 @@ instance.interceptors.request.use((config: any) => {
 });
 
 instance.interceptors.response.use((config: any) => {
+  console.log('config', config)
     return config;
 }, (async (error) => {
-    // const originalRequest = error.config;
-    if(error.response.status === 401){
+    const originalRequest = error.config;
+    console.log(error.config)
+    if(error.response.status === 401 && error.config && !error.config._isRetry){
+      originalRequest._isRetry = true;
         try{
             const response = await instance.get('/api/auth/refresh');
+            console.log('response', response)
             localStorage.setItem("token", response.data?.data?.accessToken);
+            return instance.request(originalRequest);
         }catch(err){
-            console.log('пользователь не авторизован', err);
+            console.log('not permission', err);
         };
     }
     throw error;
@@ -78,4 +83,16 @@ export const usersRequest = createAsyncThunk(
         .then((res) => res.data)
         .catch(err => err);
   }
-)
+);
+
+export const savePhoto = async (file: any) => {
+    const formData = new FormData();
+    formData.append('image', file.name);
+    console.log(file);
+    console.log(formData);
+  return instance.post(`/api/photo/upload`, file, {
+      headers: {
+          'Content-Type': 'multipart/form-data'
+      }
+  }).then(res => console.log(res));
+}

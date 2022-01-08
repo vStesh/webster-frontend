@@ -60,6 +60,11 @@ const Drawer: React.FC = () => {
                             <ListItemText primary={'Карта'} />
                         </ListItem>
                     </LinkWrapper>
+                    <LinkWrapper to="/users-images">
+                        <ListItem button>
+                            <ListItemText primary={'Ваше изображение'} />
+                        </ListItem>
+                    </LinkWrapper>
                     <LinkWrapper to="/settings">
                         <ListItem button>
                             <ListItemText primary={'Настройки'} />

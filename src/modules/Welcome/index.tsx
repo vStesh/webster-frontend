@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import Header from "../../components/Header";
-import WelcomeComponent from "../../components/Welcome";
+import Slider from "../../components/Slider";
 import Footer from "../../components/Footer";
 import { SliderData } from "../../assets/SliderData";
 import { useNavigate } from 'react-router-dom';
@@ -20,7 +20,7 @@ const Welcome: React.FC = () => {
     <BodyWrapper>
       <Header loginButton signUpButton />
       <h1 style={{ textAlign: "center" }}>Welcome page</h1>
-      <WelcomeComponent  />
+      <Slider slides={SliderData} />
       <Footer />
     </BodyWrapper>
   );
