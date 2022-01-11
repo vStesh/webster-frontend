@@ -1,10 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { PhotoStateType } from '../types';
-import { updatePhoto } from '../api';
+import { savePhoto } from '../api';
 
 
 const initialState: PhotoStateType = {
-  photoURL: {},
+  photoResponse: {},
   status: '',
 };
 
@@ -13,19 +13,17 @@ export const photoSlice = createSlice({
     initialState,
     reducers: {},
     extraReducers: (builder) => {
-        builder.addCase(updatePhoto.pending, (state) => {
+        builder.addCase(savePhoto.pending, (state) => {
             state.status = 'pending';
         });
-        builder.addCase(updatePhoto.fulfilled, (state, { payload }) => {
+        builder.addCase(savePhoto.fulfilled, (state, { payload }) => {
             state.status = 'fulfilled';
-            state.photoURL = payload;
+            state.photoResponse = payload;
         });
-        builder.addCase(updatePhoto.rejected, (state) => {
+        builder.addCase(savePhoto.rejected, (state) => {
             state.status = 'some error ocurred';
         })
     },
   });
 
-//   export const { logOutAction, savePhoto } = loginSlice.actions;
-
-  export default photoSlice.reducer; 
+export default photoSlice.reducer; 

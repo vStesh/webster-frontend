@@ -58,19 +58,12 @@ export const logOutRequest = async () => {
   return instance.post("api/auth/logout");
 };
 
-export const updatePhoto = createAsyncThunk(
-  "photo/updatePhoto",
-  async (id: string | undefined) => {
-    return instance.put(`api/user/${id}`);
-  }
-);
-
 export const userDataRequest = createAsyncThunk(
   "user/userDataRequest",
   async () => {
     return instance
       .get("api/auth/user")
-      .then((res) => res.data.data)
+      .then((res) => res.data)
       .catch((err) => err);
   }
 );
@@ -85,14 +78,39 @@ export const usersRequest = createAsyncThunk(
   }
 );
 
-export const savePhoto = async (file: any) => {
+export const savePhoto = createAsyncThunk(
+  "photo/savePhoto",
+  async (file: any) => {
     const formData = new FormData();
-    formData.append('image', file.name);
-    console.log(file);
-    console.log(formData);
-  return instance.post(`/api/photo/upload`, file, {
-      headers: {
-          'Content-Type': 'multipart/form-data'
-      }
-  }).then(res => console.log(res));
+    formData.append('file', file);
+    return instance
+        .post("/api/photo", formData)
+        .then(res => res.data)
+        .catch(err => err);
+  }
+);
+
+export const createOrder = createAsyncThunk(
+  "order/createOrder",
+  async () => {
+    return instance.post('api/order')
+            .then(res => res.data)
+            .catch(err => err);
+  }
+);
+
+export const getOrders = createAsyncThunk(
+  "orders/getOrders",
+  async () => {
+    return instance.get('api/order')
+            .then(res => res.data)
+            .catch(err => err);
+  }
+);
+
+export const getImages = () => {
+    return instance.get('api/photo')
+        .then(res => res.data)
+        .catch(err => err);
 }
+

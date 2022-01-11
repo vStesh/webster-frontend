@@ -62,7 +62,7 @@ const Drawer: React.FC = () => {
                     </LinkWrapper>
                     <LinkWrapper to="/users-images">
                         <ListItem button>
-                            <ListItemText primary={'Ваше изображение'} />
+                            <ListItemText primary={'Ваші зображення'} />
                         </ListItem>
                     </LinkWrapper>
                     <LinkWrapper to="/settings">

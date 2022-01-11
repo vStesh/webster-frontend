@@ -1,8 +1,6 @@
 import React, { useEffect } from "react";
 import Header from "../../components/Header";
-import Slider from "../../components/Slider";
 import Footer from "../../components/Footer";
-import { SliderData } from "../../assets/SliderData";
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/rootReducer';
@@ -20,7 +18,6 @@ const Welcome: React.FC = () => {
     <BodyWrapper>
       <Header loginButton signUpButton />
       <h1 style={{ textAlign: "center" }}>Welcome page</h1>
-      <Slider slides={SliderData} />
       <Footer />
     </BodyWrapper>
   );

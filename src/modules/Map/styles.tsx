@@ -6,6 +6,3 @@ export const BodyWrapper = styled('div')({
     flexDirection: 'column',
     minHeight: '100vh',
 });
-export const ButtonWrapper = styled('div')({
-    margin: 150,
-});
