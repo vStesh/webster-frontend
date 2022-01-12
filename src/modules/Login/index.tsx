@@ -123,10 +123,10 @@ const Login: React.FC = () => {
         <Header signUpButton />
         <Section>
           <MainContainer>
-            <Typography variant="h5">Get started with your account</Typography>
+            <Typography variant="h5">Логінізація</Typography>
             <TextFieldWrapper
               id="outlined-basic"
-              label="Email"
+              label="Електронна адреса"
               variant="outlined"
               value={email}
               error={!!errorEmail?.email}
@@ -134,7 +134,7 @@ const Login: React.FC = () => {
               onChange={emailChange}
             />
             <FormControl sx={{ m: 1, width: '43.5ch' }} variant="outlined">
-              <InputLabel htmlFor="outlined-adornment-password" error={showErrorLabel}>Password</InputLabel>
+              <InputLabel htmlFor="outlined-adornment-password" error={showErrorLabel}>Пароль</InputLabel>
               <OutlinedInput
                     label="Password"
                     id="outlined-adornment-password"
@@ -158,7 +158,7 @@ const Login: React.FC = () => {
                   {errorPassword ? <div style={{color: '#f44336', marginLeft: 15, fontSize: 13}}>Looks like your password doesn’t match requirements.</div> : null}
               </FormControl>
             <LinkSubTitle1 to="/forget-password">
-                            <Typography variant="subtitle1">don't remember password</Typography>
+                            <Typography variant="subtitle1">забув пароль?</Typography>
             </LinkSubTitle1>
             <div style={{color: 'red'}}>{userAlreadyExists}</div>
             <ButtonWrapper
@@ -167,7 +167,7 @@ const Login: React.FC = () => {
               variant="contained"
               disabled={disableBtn}
             >
-              Get Started
+              Увійти
             </ButtonWrapper>
           </MainContainer>
         </Section>

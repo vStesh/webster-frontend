@@ -8,7 +8,7 @@ import { BodyWrapper } from "./styles";
 const History: React.FC = () => {
   return (
     <BodyWrapper>
-      <Header drawer logOut />
+      <Header drawer />
       <Typography variant="h2">История</Typography>
       <Link to="/">home</Link>
       <Footer />

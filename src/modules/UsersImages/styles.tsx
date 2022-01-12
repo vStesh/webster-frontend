@@ -1,21 +1,15 @@
 import { styled } from '@mui/system';
 
-export const InputWrapper = styled('div')({
-    margin: '50px',
-})
-
 export const BodyWrapper = styled('div')({
-    margin: '0px',
-    display: 'flex',
-    flexDirection: 'column',
-    minHeight: '80vh',
-});
-
-export const Container = styled('div')({
     margin: '0px 10%',
     display: 'flex',
     flexDirection: 'column',
+    minHeight: '100vh',
 });
+
+export const InputWrapper = styled('div')({
+    margin: '50px',
+})
 
 export const ImageContainer = styled('div')({
     display: 'flex',

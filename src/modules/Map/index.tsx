@@ -8,7 +8,7 @@ import { BodyWrapper } from "./styles";
 const Map: React.FC = () => {
   return (
     <BodyWrapper>
-      <Header drawer logOut />
+      <Header drawer />
       <Typography variant="h2">Карта</Typography>
       <Link to="/">home</Link>
       <Footer />

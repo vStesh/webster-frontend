@@ -17,7 +17,7 @@ const Welcome: React.FC = () => {
   return (
     <BodyWrapper>
       <Header loginButton signUpButton />
-      <h1 style={{ textAlign: "center" }}>Welcome page</h1>
+      <h1 style={{ textAlign: "center" }}>Вітаємо!</h1>
       <Footer />
     </BodyWrapper>
   );

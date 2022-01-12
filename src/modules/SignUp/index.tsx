@@ -171,10 +171,10 @@ const SignUp: React.FC = () => {
         <Header loginButton />
         <Section>
           <MainContainer>
-            <Typography variant="h5">Get started with your account</Typography>
+            <Typography variant="h5">Давай почнемо створювати твій аккаунт</Typography>
               <TextFieldWrapper
                 id="outlined-basic"
-                label="Your name"
+                label="Ім'я"
                 variant="outlined"
                 value={name}
                 onChange={nameChange}
@@ -183,7 +183,7 @@ const SignUp: React.FC = () => {
               />
               <TextFieldWrapper
                 id="outlined-basic"
-                label="Email"
+                label="Електронна адреса"
                 variant="outlined"
                 value={email}
                 error={errors}
@@ -191,7 +191,7 @@ const SignUp: React.FC = () => {
                 onChange={handleChange}
               />
               <FormControl sx={{ m: 1, width: '43.5ch' }} variant="outlined">
-                <InputLabel htmlFor="outlined-adornment-password" error={showErrorLabel}>Password</InputLabel>
+                <InputLabel htmlFor="outlined-adornment-password" error={showErrorLabel}>Пароль</InputLabel>
                 <OutlinedInput
                       label="Password"
                       id="outlined-adornment-password"
@@ -215,7 +215,7 @@ const SignUp: React.FC = () => {
                     {errorPassword ? <div style={{color: '#f44336', marginLeft: 15, fontSize: 13}}>Looks like your password doesn’t match requirements.</div> : null}
               </FormControl>
               <FormControl sx={{ m: 1, width: '43.5ch' }} variant="outlined">
-                <InputLabel htmlFor="outlined-adornment-password" error={showErrorLabelConfirm}>Password</InputLabel>
+                <InputLabel htmlFor="outlined-adornment-password" error={showErrorLabelConfirm}>Пароль</InputLabel>
                 <OutlinedInput
                       label="Confirm Password"
                       id="outlined-adornment-password"
@@ -244,7 +244,7 @@ const SignUp: React.FC = () => {
                 disabled={disableBtn}
                 onClick={verifyAllData}
                 >
-                Get Started
+                Зареєструватися
               </ButtonWrapper>
           </MainContainer>
         </Section>

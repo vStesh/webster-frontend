@@ -11,7 +11,7 @@ const Settings: React.FC = () => {
     const userData = useSelector((state: RootState) => state.user?.userData);
     return (
         <BodyWrapper>
-            <Header logOut drawer /> 
+            <Header drawer /> 
             <Typography variant="h2">
                 Настройки
             </Typography>

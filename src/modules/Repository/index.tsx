@@ -9,7 +9,7 @@ const Repository: React.FC = () => {
   return (
     <>
       <BodyWrapper>
-        <Header drawer logOut />
+        <Header drawer />
         <Typography variant="h2">Хранилище</Typography>
         <Link to="/">home</Link>
         <Footer />

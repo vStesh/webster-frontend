@@ -7,11 +7,19 @@ import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
+import { logOutAction } from '../../features/userSlice';
+import { useDispatch } from "react-redux";
+import { logOutRequest } from "../../api";
 
 import { Wrapper, LinkWrapper } from './styles';
 
 const Drawer: React.FC = () => {
     const [open, setOpen] = React.useState<boolean>(false);
+    const dispatch = useDispatch();
+    const deleteUser = () => {
+        logOutRequest();
+        dispatch(logOutAction());
+      }
   return (
     <div>
       <IconButton
@@ -37,27 +45,27 @@ const Drawer: React.FC = () => {
                 <List>
                     <LinkWrapper to="/repository">
                         <ListItem button>
-                            <ListItemText primary={'Хранилища'} />
+                            <ListItemText primary={'Хранилище'} />
                         </ListItem>
                     </LinkWrapper>
                     <LinkWrapper to="/orders">
                         <ListItem button>
-                            <ListItemText primary={'Заказы'} />
+                            <ListItemText primary={'Закази'} />
                         </ListItem>
                     </LinkWrapper>
                     <LinkWrapper to="/templates">
                         <ListItem button>
-                            <ListItemText primary={'Шаблоны'} />
+                            <ListItemText primary={'Шаблони'} />
                         </ListItem>
                     </LinkWrapper>
                     <LinkWrapper to="/history">
                         <ListItem button>
-                            <ListItemText primary={'История'} />
+                            <ListItemText primary={'Історія'} />
                         </ListItem>
                     </LinkWrapper>
                     <LinkWrapper to="/map">
                         <ListItem button>
-                            <ListItemText primary={'Карта'} />
+                            <ListItemText primary={'Мапа'} />
                         </ListItem>
                     </LinkWrapper>
                     <LinkWrapper to="/users-images">
@@ -67,7 +75,13 @@ const Drawer: React.FC = () => {
                     </LinkWrapper>
                     <LinkWrapper to="/settings">
                         <ListItem button>
-                            <ListItemText primary={'Настройки'} />
+                            <ListItemText primary={'Налаштування'} />
+                        </ListItem>
+                    </LinkWrapper>
+                    <hr />
+                    <LinkWrapper to="/welcome">
+                        <ListItem button>
+                            <ListItemText primary={'Вийти'} onClick={deleteUser}/>
                         </ListItem>
                     </LinkWrapper>
                 </List>

@@ -6,46 +6,29 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Drawer from '../Drawer';
 import { LinkWrapper } from "./styles";
-import { logOutAction } from '../../features/userSlice';
-import { useDispatch } from "react-redux";
-import { logOutRequest } from "../../api";
 
 export interface PageProps {
   drawer?: boolean;
   loginButton?: boolean;
   signUpButton?: boolean;
-  logOut?: boolean;
 }
 
-const Header: React.FC<PageProps> = ({ loginButton, signUpButton, drawer, logOut }) => {
-  const dispatch = useDispatch();
-
+const Header: React.FC<PageProps> = ({ loginButton, signUpButton, drawer }) => {
   const loginButtonElement = loginButton && (
     <LinkWrapper to="/login">
       <Button color="inherit" variant="outlined">
-        Log In
+        Увійти
       </Button>
     </LinkWrapper>
   );
   const signUpButtonElement = signUpButton && (
     <LinkWrapper to="/sign-up">
       <Button color="secondary" variant="contained">
-        Sign Up
+        Зареєструватися
       </Button>
     </LinkWrapper>
   );
 
-  const deleteUser = () => {
-    logOutRequest();
-    dispatch(logOutAction());
-  }
-  const logOutButtonElement = logOut && (
-    <LinkWrapper to="/welcome">
-      <Button color="inherit" variant="contained" onClick={deleteUser}>
-        Log Out
-      </Button>
-    </LinkWrapper>
-  );
   return (
     <Box>
       <AppBar position="static">
@@ -56,7 +39,6 @@ const Header: React.FC<PageProps> = ({ loginButton, signUpButton, drawer, logOut
           </Typography>
           <Box mr={3}>{loginButtonElement}</Box>
           {signUpButtonElement}
-          {logOutButtonElement}
         </Toolbar>
       </AppBar>
     </Box>

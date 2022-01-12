@@ -3,7 +3,6 @@ import {
     BrowserRouter,
     Routes,
     Route,
-    RouteProps,
   } from 'react-router-dom';
 
 import Welcome from '../modules/Welcome';
@@ -21,13 +20,16 @@ import Orders from '../modules/Orders';
 import Map from '../modules/Map';
 import History from '../modules/History';
 import UsersImages from '../modules/UsersImages';
+import Admin from "../modules/Admin";
+import { useDispatch } from 'react-redux';
+import { userDataRequest } from '../api';
 
-export interface IRouteProps extends RouteProps {
-    isAuthenticated?: boolean;
-  }
 
-
-const Routesss: React.FC<IRouteProps> = (props) => {
+const Routesss: React.FC = () => {
+  const dispatch = useDispatch();
+  React.useEffect(() => {
+    dispatch(userDataRequest());
+  }, [])
     return (
       <>
       <BrowserRouter basename="/">
@@ -46,6 +48,14 @@ const Routesss: React.FC<IRouteProps> = (props) => {
           <Route path="/map" element={<Map />}></Route>
           <Route path="/history" element={<History />}></Route>
           <Route path="/users-images" element={<UsersImages />}></Route>
+          <Route path="/admin" element={<Admin />}></Route>
+          <Route path="/admin/users" element={<Admin />}></Route>
+          <Route path="/admin/services" element={<Admin />}></Route>
+          <Route path="/admin/orders" element={<Admin />}></Route>
+          <Route path="/admin/photos" element={<Admin />}></Route>
+          <Route path="/admin/papers" element={<Admin />}></Route>
+          <Route path="/admin/sizes" element={<Admin />}></Route>
+          <Route path="/admin/types" element={<Admin />}></Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

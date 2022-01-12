@@ -111,7 +111,7 @@ const SvgButton = React.forwardRef(function SvgButton(props, ref) {
 
 
 const UnstyledButtonCustom = ({ goToOrderPage }) => {
-  return <SvgButton onClick={goToOrderPage}>Сделать заказ</SvgButton>;
+  return <SvgButton onClick={goToOrderPage}>Замовлення</SvgButton>;
 }
 
 export default UnstyledButtonCustom;

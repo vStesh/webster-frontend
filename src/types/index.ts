@@ -80,7 +80,7 @@ export interface OrderDataType {
     service?: null;
     status: string;
     deletedAt?: null;
-    createdAt: string
+    createdAt: string;
     updatedAt: string;
     number: string;
     __v: number;
@@ -95,3 +95,64 @@ export interface OrderType {
     status: string;
     orderResponse: OrderResponseType | null;
 }
+
+/* DB types start */
+
+/* DB order */
+export interface DBOrderType {
+    _id: string;
+    user: string;
+    number: string;
+    comment?: string;
+    service?: string | null;
+    settings?: DBOrderSettingsType | null;
+    status: string;
+    createdAt: string;
+    updatesAt: string;
+    deletedAt: string | null;
+}
+
+export interface DBOrderSettingsType {
+    sections?: Array<DBOrderSettingsSectionType> | null;
+}
+
+export interface DBOrderSettingsSectionType {
+    size: DBSizeType | null;
+    photos: Array<string> | null;
+    paper: DBPaperType | null;
+    type: DBTypeType | null;
+}
+
+/* DB size */
+export interface DBSizeType {
+    _id: string;
+    name: string;
+    width: number;
+    height: number;
+    createdAt: string;
+    updatesAt: string;
+    deletedAt: string | null;
+}
+
+/* DB paper */
+export interface DBPaperType {
+    _id: string;
+    name: string;
+    size: string;
+    typePaper: string;
+    density: number;
+    createdAt: string;
+    updatesAt: string;
+    deletedAt: string | null;
+}
+
+/* DB type */
+export interface DBTypeType {
+    _id: string;
+    name: string;
+    createdAt: string;
+    updatesAt: string;
+    deletedAt: string | null;
+}
+
+/* DB types finish */

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
-import {BodyWrapper, CenterWrapper, Wrapper} from "./styles";
+import {BodyWrapper, LoaderWrapper, Wrapper} from "./styles";
 import {createOrder, getOrders} from "../../api";
 import Button from "@mui/material/Button";
 import { NewOrder } from "../../components/Orders/NewOrder";
@@ -47,10 +47,9 @@ const Orders: React.FC = () => {
     setCurrentOrder(item);
   }
 
-  console.log(currentOrder);
   return (
     <BodyWrapper>
-      <Header drawer logOut />
+      <Header drawer />
       {currentOrder && <NewOrder order={currentOrder} dropZero={dropZero} setCurrentOrder={setCurrentOrder} />}
       {!currentOrder && allOrders && (
         <Wrapper>
@@ -58,7 +57,10 @@ const Orders: React.FC = () => {
                         <OrderList orders={allOrders} dropZero={dropZero} selectOrder={selectOrder} />
         </Wrapper>
       )}
+      <LoaderWrapper>
       {!allOrders && <Loader />}
+      </LoaderWrapper>
+      
       <Footer />
     </BodyWrapper>
   );

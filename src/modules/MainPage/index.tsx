@@ -28,7 +28,7 @@ const MainPage: React.FC = () => {
   }, [navigate, dispatch]);
   return (
     <BodyWrapper>
-      <Header drawer logOut/>
+      <Header drawer/>
         <ButtonWrapper>
           <AwesomeButton goToOrderPage={goToOrderPage}/>
         </ButtonWrapper>

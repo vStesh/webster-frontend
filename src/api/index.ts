@@ -108,9 +108,35 @@ export const getOrders = createAsyncThunk(
   }
 );
 
-export const getImages = () => {
+export const getImages = async () => {
     return instance.get('api/photo')
         .then(res => res.data)
         .catch(err => err);
+}
+
+export const postSizes = async (data: { name: string, width: number, height: number }) => {
+  return instance.post('api/size', data)
+        .then(res => res.data)
+        .catch(err => err);
+};
+
+export const getSizes = createAsyncThunk(
+  'sizes/getSizes',
+  async () => {
+    return instance.get('api/size')
+          .then(res => res.data)
+          .catch(err => err);
+  }
+);
+export const postPapers = async (data: { name: string, size: string, typePaper: string, density: number }) => {
+  return instance.post('api/size', data)
+        .then(res => res.data)
+        .catch(err => err);
+};
+
+export const getPapers = async () => {
+  return instance.get('api/paper')
+      .then(res => res.data)
+      .catch(err => err);
 }
 

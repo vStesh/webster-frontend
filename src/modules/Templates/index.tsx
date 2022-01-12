@@ -9,7 +9,7 @@ const Templates: React.FC = () => {
   return (
     <>
       <BodyWrapper>
-        <Header drawer logOut/>
+        <Header drawer />
         <Typography variant="h2">Шаблоны</Typography>
         <Link to="/">home</Link>
         <Footer />

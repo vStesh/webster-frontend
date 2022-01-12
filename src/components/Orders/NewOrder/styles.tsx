@@ -18,6 +18,14 @@ export const BodyWrapper = styled('div')({
     margin: "0 10%",
 });
 
+export const Section = styled('div')({
+    display: "flex",
+    width: "100%",
+    flexDirection: "row",
+    flexWrap: 'wrap',
+    // justifyContent: "center",
+});
+
 export const ButtonWrapper = styled('div')({
     display: "flex",
     width: "100%",
