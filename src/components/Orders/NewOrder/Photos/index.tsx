@@ -27,7 +27,7 @@ export interface PageProps {
 
 export const Photos: React.FC<PageProps> = ({section, photos, remove}) => {
 
-    const [dragEnter, setDragEnter] = useState(true);
+    const [dragEnter, setDragEnter] = useState(false);
     photos = [];
 
     const onDragHandler = () => {
@@ -37,10 +37,10 @@ export const Photos: React.FC<PageProps> = ({section, photos, remove}) => {
     <PhotosBodyWrapper>
         <PhotosHeader>
             <div>Розмір: {section?.size?.name}</div>
-            <div onClick={() => remove()}>Видалити</div>
+            <div onClick={() => remove()} style={{textDecoration: 'underline', cursor: 'pointer'}}>Видалити</div>
         </PhotosHeader>
         {!dragEnter ?
-            <div onDragEnter={onDragHandler} onDragLeave={onDragHandler} onDragOver={onDragHandler}>
+            <div onDragEnter={onDragHandler} onDragLeave={onDragHandler} onDragOver={onDragHandler} style={{width: '100%'}}>
                 {photos &&
                     <PhotosBorder>Тут будуть фотографії</PhotosBorder>
                 }
