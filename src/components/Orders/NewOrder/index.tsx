@@ -24,12 +24,19 @@ import { SelectChangeEvent } from '@mui/material/Select';
 import UploadButton from "../../UploadButton";
 import {Photos} from "./Photos";
 import {useEffect, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {RootState} from "../../../store/rootReducer";
+import {getSizes} from "../../../api";
 
 
 export const NewOrder: React.FC<OrderProps> = ({ order, dropZero, setCurrentOrder }) => {
 
+    const dispatch = useDispatch();
+
     const [step, setStep] = useState(0);
     const [orderInfo, setOrderInfo] = useState<DBOrderSettingsType>({});
+    const sizes = useSelector((state: RootState) => state.sizes.sizesResponse?.data);
+    const photo = useSelector((state: RootState) => state.photo?.photoResponse?.data);
     const steps = [
         'Виберіть розміри',
         'Завантажте або виберіть фото',
@@ -37,50 +44,50 @@ export const NewOrder: React.FC<OrderProps> = ({ order, dropZero, setCurrentOrde
         'Виберіть тип друку',
         'Виберіть сервіс'
     ]
-    const sizes: Array<DBSizeType> = [
-        {
-            _id: '1212122',
-            name: '10x15',
-            width: 10,
-            height: 15,
-            createdAt: 'sdsdsd',
-            updatesAt: 'sdsdsd',
-            deletedAt: 'sdsdsd',
-        },
-        {
-            _id: '121212',
-            name: '13x18',
-            width: 10,
-            height: 15,
-            createdAt: 'sdsdsd',
-            updatesAt: 'sdsdsd',
-            deletedAt: 'sdsdsd',
-        },
-        {
-            _id: '12121',
-            name: '15x21',
-            width: 10,
-            height: 15,
-            createdAt: 'sdsdsd',
-            updatesAt: 'sdsdsd',
-            deletedAt: 'sdsdsd',
-        },
-        {
-            _id: '1212',
-            name: '21x30',
-            width: 10,
-            height: 15,
-            createdAt: 'sdsdsd',
-            updatesAt: 'sdsdsd',
-            deletedAt: 'sdsdsd',
-        },
-    ]
+    // const sizes: Array<DBSizeType> = [
+    //     {
+    //         _id: '1212122',
+    //         name: '10x15',
+    //         width: 10,
+    //         height: 15,
+    //         createdAt: 'sdsdsd',
+    //         updatesAt: 'sdsdsd',
+    //         deletedAt: 'sdsdsd',
+    //     },
+    //     {
+    //         _id: '121212',
+    //         name: '13x18',
+    //         width: 10,
+    //         height: 15,
+    //         createdAt: 'sdsdsd',
+    //         updatesAt: 'sdsdsd',
+    //         deletedAt: 'sdsdsd',
+    //     },
+    //     {
+    //         _id: '12121',
+    //         name: '15x21',
+    //         width: 10,
+    //         height: 15,
+    //         createdAt: 'sdsdsd',
+    //         updatesAt: 'sdsdsd',
+    //         deletedAt: 'sdsdsd',
+    //     },
+    //     {
+    //         _id: '1212',
+    //         name: '21x30',
+    //         width: 10,
+    //         height: 15,
+    //         createdAt: 'sdsdsd',
+    //         updatesAt: 'sdsdsd',
+    //         deletedAt: 'sdsdsd',
+    //     },
+    // ]
     useEffect(() => {
         setOrderInfo({sections: [{size: null, photos: null, paper: null, type: null}]});
     }, []);
 
     const getSize = (id: string) => {
-        return sizes.filter(item => item._id === id)[0];
+        return sizes ? sizes.filter(item => item._id === id)[0] : null;
     }
 
     const addSize = (e: SelectChangeEvent):void => {
@@ -91,6 +98,11 @@ export const NewOrder: React.FC<OrderProps> = ({ order, dropZero, setCurrentOrde
             setStep(step === 0 ? 1 : step);
         }
     }
+
+
+    useEffect(() => {
+        dispatch(getSizes());
+    }, []);
 
     const addPaper = () => {
 
@@ -114,6 +126,20 @@ export const NewOrder: React.FC<OrderProps> = ({ order, dropZero, setCurrentOrde
         setOrderInfo(state);
         console.log('remove');
         console.log(state);
+    }
+
+    const addPhoto = (key: number) => {
+        let state = {...orderInfo};
+        if(state?.sections) {
+            if(!state?.sections[key].photos) {
+                state.sections[key].photos = [photo];
+            } else {
+                state.sections[key].photos?.push(photo);
+            }
+            console.log(photo);
+            console.log(state.sections[key]);
+        }
+        setOrderInfo(state);
     }
 
     console.log(orderInfo);
@@ -152,7 +178,7 @@ export const NewOrder: React.FC<OrderProps> = ({ order, dropZero, setCurrentOrde
                                   style={{width: !item.size ? '150px' : '0px', overflow: 'hidden', transition: '0.5s'}}
 
                               >
-                                  {sizes.map((size, keySize) => <MenuItem value={size._id} key={keySize.toString()}>{size.name}</MenuItem>)}
+                                  {sizes && sizes.map((size, keySize) => <MenuItem value={size._id} key={keySize.toString()}>{size.name}</MenuItem>)}
                               </Select>
                       </FormControl>
                       <FormControl variant="filled" style={{marginRight: '2px'}} key={key.toString()}>
@@ -165,10 +191,10 @@ export const NewOrder: React.FC<OrderProps> = ({ order, dropZero, setCurrentOrde
                               style={{width: item.size ? '150px' : '0px', overflow: 'hidden', transition: '0.5s'}}
 
                           >
-                              {sizes.map((size, keySize) => <MenuItem value={size._id} key={keySize.toString()}>{size.name}</MenuItem>)}
+                              {sizes && sizes.map((size, keySize) => <MenuItem value={size._id} key={keySize.toString()}>{size.name}</MenuItem>)}
                           </Select>
                       </FormControl>
-                      {item.size && <Photos section={item} remove={() => removeSection(key)}/>}
+                      {item.size && <Photos section={item} remove={() => removeSection(key)} addPhoto={() => addPhoto(key)}/>}
                   </Section>
                   )
               }

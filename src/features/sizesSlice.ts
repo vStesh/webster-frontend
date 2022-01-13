@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { getSizes } from '../api';
+import {SizesStateType} from "../types";
 
-const initialState = {
+const initialState: SizesStateType = {
   sizesResponse: null,
   status: '',
 };

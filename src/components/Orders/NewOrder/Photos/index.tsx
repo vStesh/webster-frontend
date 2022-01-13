@@ -2,7 +2,7 @@ import * as React from "react";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import {
-    DottedBorder,
+    DottedBorder, ImageContainer,
     PhotosBodyWrapper,
     PhotosBorder,
     PhotosHeader,
@@ -17,22 +17,66 @@ import { StepLabel,
     InputLabel,
 } from '@mui/material';
 import {TypographyWrapper} from "../styles";
-import {useState} from "react";
+import {DragEventHandler, useState} from "react";
+import {SelectChangeEvent} from "@mui/material/Select";
+import {savePhoto} from "../../../../api";
+import {useDispatch, useSelector} from "react-redux";
+import {RootState} from "../../../../store/rootReducer";
+import {ImageItem, Img, ImgInfo} from "./styles";
 
 export interface PageProps {
     section: DBOrderSettingsSectionType;
-    photos?: Array<string>;
+    // photos?: Array<string>;
     remove: Function;
+    addPhoto: Function;
 }
 
-export const Photos: React.FC<PageProps> = ({section, photos, remove}) => {
-
+export const Photos: React.FC<PageProps> = ({section, remove, addPhoto}) => {
+    const dispatch = useDispatch();
     const [dragEnter, setDragEnter] = useState(false);
-    photos = [];
 
-    const onDragHandler = () => {
+    // const photos = section.photos;
 
+    const dragEnterHandler = (e: any): void => {
+        e.preventDefault();
+        e.stopPropagation();
+        setDragEnter(true);
     }
+
+    const dragLeaveHandler = (e: any): void => {
+        e.preventDefault();
+        e.stopPropagation();
+        setDragEnter(false);
+    }
+
+    const dropHandler = (e: any): void => {
+        e.preventDefault();
+        e.stopPropagation();
+        let files = [...e.dataTransfer.files];
+        files.map(file => uploadImage(file));
+        console.log(files);
+        setDragEnter(false);
+    }
+
+
+
+    const uploadImage = async (file: any) => {
+        const imgName = file.name;
+
+        if (
+            imgName.endsWith(".jpg") ||
+            imgName.endsWith(".jpeg") ||
+            imgName.endsWith(".png")
+        ) {
+            await dispatch(savePhoto(file));
+            addPhoto();
+        } else {
+            console.log('error upload files');
+        }
+
+    };
+
+    console.log(dragEnter);
   return (
     <PhotosBodyWrapper>
         <PhotosHeader>
@@ -40,11 +84,32 @@ export const Photos: React.FC<PageProps> = ({section, photos, remove}) => {
             <div onClick={() => remove()} style={{textDecoration: 'underline', cursor: 'pointer'}}>Видалити</div>
         </PhotosHeader>
         {!dragEnter ?
-            <div onDragEnter={onDragHandler} onDragLeave={onDragHandler} onDragOver={onDragHandler} style={{width: '100%'}}>
-                {photos &&
-                    <PhotosBorder>Тут будуть фотографії</PhotosBorder>
+            <div onDragEnter={dragEnterHandler} onDragLeave={dragLeaveHandler} onDragOver={dragEnterHandler} style={{width: '100%'}}>
+                {section.photos &&
+                    <PhotosBorder>
+                        <ImageContainer>
+                        {section.photos.map((item, index) =>
+                            <ImageItem key={index}>
+                                <Img>
+                                    <img
+                                        style={{ width: "100%" }}
+                                        src={item["url"]}
+                                        alt="downloaded file"
+                                    />
+                                </Img>
+                                <ImgInfo>
+                                    {item["settings"]["fileName"]}
+                                    <br />
+                                    {`розмір: ${Math.floor(
+                                        item["settings"]["size"] / 1024
+                                    )} Кб`}
+                                </ImgInfo>
+                            </ImageItem>
+                        )}
+                        </ImageContainer>
+                    </PhotosBorder>
                 }
-                {!photos &&
+                {!section.photos &&
                     <DottedBorder>
                             <Typography variant="h6" style={{ textAlign: "center", cursor: 'pointer', textDecoration: 'underline' }}>
                                 виберіть фотографії
@@ -58,7 +123,7 @@ export const Photos: React.FC<PageProps> = ({section, photos, remove}) => {
                 }
             </div>
             :
-            <DottedBorder>
+            <DottedBorder onDragEnter={dragEnterHandler} onDragLeave={dragLeaveHandler} onDragOver={dragEnterHandler} onDrop={dropHandler}>
                 <Typography variant="h3" style={{ textAlign: "center"}}>
                     перетягніть файли з фото сюди
                 </Typography>

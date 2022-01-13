@@ -8,15 +8,15 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../store/rootReducer';
 
 const Settings: React.FC = () => {
-    const userData = useSelector((state: RootState) => state.user?.userData);
+    const user = useSelector((state: RootState) => state.user?.userData?.data);
     return (
         <BodyWrapper>
             <Header drawer /> 
             <Typography variant="h2">
                 Настройки
             </Typography>
-            <div>Your name: {userData ? userData.name : 'please login'}</div>
-            <div>Your email: {userData ? userData.email : 'please login'}</div>
+            <div>Your name: {user ? user.name : 'please login'}</div>
+            <div>Your email: {user ? user.email : 'please login'}</div>
             <Link to="/">home</Link>
             <Footer />
         </BodyWrapper>

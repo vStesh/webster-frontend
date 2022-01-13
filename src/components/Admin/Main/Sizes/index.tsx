@@ -12,9 +12,9 @@ import ListItem from "@mui/material/ListItem";
 import { useDispatch, useSelector } from "react-redux";
 import { getSizes, postSizes } from "../../../../api";
 import { RootState } from "../../../../store/rootReducer";
+import SizesList from "./SizesList";
 
 const AdminMainSizes: React.FC = () => {
-  const [paper, setPaper] = useState<boolean>(false);
   const [showForm, setShowForm] = useState<boolean>(false);
   const [nameInput, setNameInput] = useState<string>("");
   const [widthInput, setWidthInput] = useState<number>(0);
@@ -46,14 +46,12 @@ const AdminMainSizes: React.FC = () => {
   };
 
   const creatingPostRequestWithSizes = () => {
-    setPaper(false);
     postSizes({ name: nameInput, width: widthInput, height: heightInput }).then(
       (res) => {
         if (res.status === 0) {
           setNameInput("");
           setWidthInput(0);
           setHeightInput(0);
-          setPaper(true)
         }
       }
     );
@@ -105,12 +103,8 @@ const AdminMainSizes: React.FC = () => {
         </>
       )}
       <ElementsList>
-        {paper ? <NoElements>Один папір</NoElements> : <NoElements>Ще немає паперу</NoElements>}
-               {paper && <List>
-                    <ListItem>
-                        Один папір
-                    </ListItem>
-                </List>}
+        {!sizes && <NoElements>Ще немає розмірів</NoElements>}
+        {sizes && sizes?.data && <SizesList sizes={sizes.data}/>}
       </ElementsList>
     </div>
   );

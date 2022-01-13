@@ -12,9 +12,27 @@ import {
 } from "./styles";
 import AdminMenu from "../../components/Admin/Menu";
 import AdminMain from "../../components/Admin/Main";
+import {useSelector} from "react-redux";
+import {RootState} from "../../store/rootReducer";
 
 
 const Admin: React.FC= () => {
+
+    const user = useSelector((state: RootState) => state.user?.userData?.data);
+
+    console.log(user);
+    if(!user?.isAdmin) {
+        return (
+            <>
+                <div>
+                    Ви не є адміністратором сервісу
+                </div>
+                <div>
+                    Повернутись на головну сторінку
+                </div>
+            </>
+        )
+    }
     return (
         <BodyWrapper>
             <Header drawer/>

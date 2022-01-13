@@ -45,12 +45,12 @@ const Drawer: React.FC = () => {
                 <List>
                     <LinkWrapper to="/repository">
                         <ListItem button>
-                            <ListItemText primary={'Хранилище'} />
+                            <ListItemText primary={'Сховище'} />
                         </ListItem>
                     </LinkWrapper>
                     <LinkWrapper to="/orders">
                         <ListItem button>
-                            <ListItemText primary={'Закази'} />
+                            <ListItemText primary={'Замовлення'} />
                         </ListItem>
                     </LinkWrapper>
                     <LinkWrapper to="/templates">
@@ -76,6 +76,11 @@ const Drawer: React.FC = () => {
                     <LinkWrapper to="/settings">
                         <ListItem button>
                             <ListItemText primary={'Налаштування'} />
+                        </ListItem>
+                    </LinkWrapper>
+                    <LinkWrapper to="/admin">
+                        <ListItem button>
+                            <ListItemText primary={'Адміністратор'} />
                         </ListItem>
                     </LinkWrapper>
                     <hr />

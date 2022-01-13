@@ -24,14 +24,19 @@ export interface PhotoStateType {
     status?: string;
 }
 
+// export interface UserDataType {
+//     email?: string;
+//     id?: string;
+//     name?: string;
+//     isAdmin?: boolean;
+// }
 export interface UserDataType {
-    email?: string;
-    id?: string;
-    name?: string;
+    status?: number;
+    data?: DBUserType;
 }
 
 export interface UserSliceType {
-    userData?: UserDataType
+    userData?: UserDataType;
     isUser?: boolean;
     status?: string;
 }
@@ -96,7 +101,25 @@ export interface OrderType {
     orderResponse: OrderResponseType | null;
 }
 
+export interface SizesStateType {
+    status: string;
+    sizesResponse: SizesResponseType | null;
+}
+
+export interface SizesResponseType {
+    status?: number;
+    data?: Array<DBSizeType> | null;
+}
+
 /* DB types start */
+
+/* DB user get:/api/auth/user */
+export interface DBUserType {
+    email?: string;
+    id?: string;
+    name?: string;
+    isAdmin?: boolean;
+}
 
 /* DB order */
 export interface DBOrderType {
@@ -118,9 +141,22 @@ export interface DBOrderSettingsType {
 
 export interface DBOrderSettingsSectionType {
     size: DBSizeType | null;
-    photos: Array<string> | null;
+    // photos: Array<DBPhotoType> | null;
+    photos: Array<any> | null;
     paper: DBPaperType | null;
     type: DBTypeType | null;
+}
+
+/* DB photo */
+export interface DBPhotoType {
+    _id: string;
+    user: string;
+    url: number;
+    settings: any;
+    createdAt: string;
+    updatesAt: string;
+    deletedAt: string | null;
+    _v: number;
 }
 
 /* DB size */
